@@ -1,0 +1,65 @@
+locations
+    id_location
+    latitude
+    longitude
+    id_location_info
+    id_user
+    created_at
+    updated_at
+    deleted_at
+
+location_infos
+    id_location_info
+    title
+    description
+    like
+    dislike
+    created_at
+    updated_at
+
+images
+    id_image
+    name
+    path
+    id_user
+    extension
+    created_at
+    updated_at
+
+location_info_images [pivot]
+    id_location_info
+    id_image
+
+location_comments
+    id_location_comment
+    context
+    agreement
+    id_user
+    updated_at
+    created_at
+
+reports
+    id_location
+    type
+    context
+    status
+    id_user
+    created_at
+    updated_at
+    deleted_at
+
+users
+    id_user
+    device_info
+    user_ip
+    login_timestamp
+    created_at
+    updated_at
+
+user_login_logs
+    id_user_login_log
+    id_user
+    ip
+    timestamp
+    created_at
+    updated_at
