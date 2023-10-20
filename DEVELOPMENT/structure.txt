@@ -1,24 +1,23 @@
 locations
-    id_location
+    id
     latitude
     longitude
-    id_location_info
     id_user
     created_at
     updated_at
     deleted_at
 
 location_infos
-    id_location_info
+    id
+    location_id
     title
     description
-    like
-    dislike
     created_at
     updated_at
+    deleted_at
 
 images
-    id_image
+    id
     name
     path
     id_user
@@ -27,39 +26,42 @@ images
     updated_at
 
 location_info_images [pivot]
-    id_location_info
-    id_image
+    location_id
+    image_id
 
 location_comments
-    id_location_comment
+    id
+    location_id
     context
-    agreement
     id_user
     updated_at
     created_at
 
+location_comments_likes
+    id
+    comment_id
+    like
+
 reports
-    id_location
+    location_id
     type
     context
     status
-    id_user
+    user_ip
     created_at
     updated_at
     deleted_at
 
 users [OK]
-    id_user
-    device_info
-    user_ip
-    login_timestamp
+    id
+    mobile
     created_at
     updated_at
 
 user_login_logs [OK]
-    id_user_login_log
+    id
     user_id
-    ip
+    user_ip
     timestamp
     created_at
     updated_at
