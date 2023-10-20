@@ -154,7 +154,7 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => array(
 
         /*
          * Laravel Framework Service Providers...
@@ -195,7 +195,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-    ],
+        App\Providers\APIResponseProvider::class,
+    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -210,6 +211,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'APIResponse' => App\Facade\APIResponseFacade::class
     ])->toArray(),
 
 ];

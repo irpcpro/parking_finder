@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('authentication_codes', function (Blueprint $table) {
             $table->id();
-            $table->string('mobile')->unique();
-            $table->string('user_ip');
-            $table->string('login_timestamp');
-            $table->rememberToken();
+            $table->unsignedBigInteger('user_id');
+            $table->string('code');
+            $table->boolean('expired')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('authentication_codes');
     }
 };
