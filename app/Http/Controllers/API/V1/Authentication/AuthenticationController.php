@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Authentication;
 
+use App\Events\AuthenticationCodeEvent;
 use App\Http\Requests\Authentication\ConfirmationCodeRequest;
 use App\Http\Requests\Authentication\SendCodeRequest;
 use App\Models\Device;
@@ -18,13 +19,12 @@ class AuthenticationController
         if(!$user->exists())
             $user = User::create([
                 'mobile' => $request->validated()['mobile'],
-                'user_ip' => getUserIP(),
-                'login_timestamp' => time(),
             ]);
         else
             $user = $user->first();
 
-        // send code - TODO : add events for sending OTP via SMS
+        // send code
+        event(new AuthenticationCodeEvent($user));
 
         // response
         $response = APIResponse('کاربر ایجاد و کد تایید شد', 200, true);
@@ -80,6 +80,13 @@ class AuthenticationController
                 'token' => auth('api')->login($user) ?? null
             ];
 
+            // insert log
+            $user->LoginLogs()->create([
+                'user_ip' => getUserIP(),
+                'login_timestamp' => time(),
+            ]);
+
+            // insert user device info
             Device::create([
                 'user_id' => $user->id,
                 'device_info' => $request->validated('device_info'),

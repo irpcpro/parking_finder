@@ -48,7 +48,7 @@ reports
     updated_at
     deleted_at
 
-users
+users [OK]
     id_user
     device_info
     user_ip
@@ -56,9 +56,9 @@ users
     created_at
     updated_at
 
-user_login_logs
+user_login_logs [OK]
     id_user_login_log
-    id_user
+    user_id
     ip
     timestamp
     created_at

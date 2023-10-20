@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('device_info');
-            $table->string('encode');
+            $table->string('device_info')->nullable();
+            $table->string('encode')->nullable();
             $table->timestamps();
         });
     }
