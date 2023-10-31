@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Location;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+
+
+    $s = Location::first();
+    dd($s);
+
+
+
     return view('welcome');
 });

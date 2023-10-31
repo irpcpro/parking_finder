@@ -14,6 +14,17 @@ Route::namespace('V1')->prefix('v1')->group(function () {
         });
 
 
+    // private routes
+    Route::middleware('auth:api')->group(function(){
+
+        // Locations
+        Route::prefix('location')->namespace('Location')->controller('LocationController')->group(function(){
+            Route::post('store', 'store');
+        });
+
+
+    });
+
 
 
 });

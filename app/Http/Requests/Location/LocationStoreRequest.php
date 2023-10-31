@@ -6,19 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LocationStoreRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-     */
     public function rules(): array
     {
         return [
@@ -26,4 +18,13 @@ class LocationStoreRequest extends FormRequest
             'long' => ['required','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'lat' => 'عرض جغرافیایی اجباری می باشد',
+            'long' => 'طول جغرافیایی اجباری می باشد',
+        ];
+    }
+
 }

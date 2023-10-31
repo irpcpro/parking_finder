@@ -4,7 +4,10 @@ namespace App\Http\Controllers\API\V1\Location;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Location\LocationStoreRequest;
+use App\Http\Resources\V1\Location\LocationStoreResource;
 use App\Models\Location;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 
 class LocationController extends Controller
 {
@@ -17,18 +20,18 @@ class LocationController extends Controller
 
         // insert data
         $location = Location::create([
-            'coordinate' => DB::raw("POINT($request->lat, $request->long)"),
-            'user_id' => $current_user->id_user,
+            'location' => DB::raw("Point('$request->lat', '$request->long')"),
+            'user_id' => $current_user->id,
         ]);
 
 
-//        $data = new LocationStoreResource($final_attachment);
-//        $data = $data->toArray($request);
+        $data = new LocationStoreResource($location);
+        $data = $data->toArray($request);
 
         // send response
-//        $response = APIResponse('لوکیشن ثبت شد', 200, true);
-//        $response = $response->setData($data);
-//        $response->send();
+        $response = APIResponse(Lang::get('msg.location.store.success'), 200, true);
+        $response = $response->setData($data);
+        $response->send();
     }
 
 }
