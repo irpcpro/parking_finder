@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Location;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Lang;
 
 class LocationStoreRequest extends FormRequest
 {
@@ -22,8 +23,10 @@ class LocationStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'lat' => 'عرض جغرافیایی اجباری می باشد',
-            'long' => 'طول جغرافیایی اجباری می باشد',
+            'lat.required' => Lang::get('msg.location.rule.lat.required'),
+            'lat.regex' => Lang::get('msg.location.rule.lat.regex'),
+            'long.required' => Lang::get('msg.location.rule.long.required'),
+            'long.regex' => Lang::get('msg.location.rule.long.regex'),
         ];
     }
 

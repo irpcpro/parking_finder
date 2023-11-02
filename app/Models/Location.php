@@ -44,7 +44,6 @@ class Location extends Model
             foreach ($this->geometry as $column)
             {
                 $raw .= 'AsText(`' . $this->table . '`.`' . $column . '`) as `' . $column . '`, ';
-
             }
             $raw = substr($raw, 0, -2);
 
@@ -56,7 +55,8 @@ class Location extends Model
 
     public function getLatAttribute(): string | null
     {
-        $getLat = getLatLongFromPoint($this->location);
+        $location = $this->location->getValue(DB::getQueryGrammar());
+        $getLat = getLatLongFromPoint($location);
         if(!empty($getLat))
             return $getLat[1];
         return null;
@@ -64,7 +64,8 @@ class Location extends Model
 
     public function getLongAttribute(): string | null
     {
-        $getLat = getLatLongFromPoint($this->location);
+        $location = $this->location->getValue(DB::getQueryGrammar());
+        $getLat = getLatLongFromPoint($location);
         if(!empty($getLat))
             return $getLat[2];
         return null;

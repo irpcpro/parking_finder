@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Authentication;
 
 use App\Http\Requests\AppRequest;
+use Illuminate\Support\Facades\Lang;
 
 class SendCodeRequest extends AppRequest
 {
@@ -23,8 +24,8 @@ class SendCodeRequest extends AppRequest
     public function messages()
     {
         return [
-            'mobile.required' => 'شماره همراه الزامی است',
-            'mobile.regex' => 'فرمت شماره همراه اشتباه است',
+            'mobile.required' => Lang::get('msg.auth.rule.mobile.required'),
+            'mobile.regex' => Lang::get('msg.auth.rule.mobile.regex'),
         ];
     }
 

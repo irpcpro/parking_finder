@@ -7,6 +7,7 @@ use App\Http\Requests\Authentication\ConfirmationCodeRequest;
 use App\Http\Requests\Authentication\SendCodeRequest;
 use App\Models\Device;
 use App\Models\User;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 
 class AuthenticationController
@@ -27,7 +28,7 @@ class AuthenticationController
         event(new AuthenticationCodeEvent($user));
 
         // response
-        $response = APIResponse('کاربر ایجاد و کد تایید شد', 200, true);
+        $response = APIResponse(Lang::get('msg.auth.code.created'), 200, true);
         $response = $response->setData($request->validated());
         $response->send();
     }
@@ -42,7 +43,7 @@ class AuthenticationController
         // get user
         $user = User::where('mobile', $mobile);
         if(!$user->exists())
-            APIResponse('کاربری با این شماره یافت نشد', 422)->send();
+            APIResponse(Lang::get('msg.auth.user.notfound'), 422)->send();
 
         // get user
         $user = $user->first();
@@ -54,14 +55,14 @@ class AuthenticationController
 
         // check if user have and code
         if(!$auth_code->exists())
-            APIResponse('کد منقضی شده است', 422)->send();
+            APIResponse(Lang::get('msg.auth.code.expired'), 422)->send();
 
         // get code
         $auth_code = $auth_code->first();
 
         // check code
         if($auth_code->code != $code)
-            APIResponse('کد اشتباه است', 401)->send();
+            APIResponse(Lang::get('msg.auth.code.wrong'), 401)->send();
 
         try{
             // expire code
@@ -93,7 +94,7 @@ class AuthenticationController
                 'encode' => DEVICE_INFO_ENCODE
             ]);
 
-            $response = APIResponse('ورود موفقیت آمیز بود', 200, true);
+            $response = APIResponse(Lang::get('msg.auth.login.success'), 200, true);
             $response = $response->setData($data);
             $get_response = $response->get();
         }catch (\Exception $exception){

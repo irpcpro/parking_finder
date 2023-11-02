@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Authentication;
 
 use App\Http\Requests\AppRequest;
+use Illuminate\Support\Facades\Lang;
 
 
 class ConfirmationCodeRequest extends AppRequest
@@ -25,12 +26,12 @@ class ConfirmationCodeRequest extends AppRequest
     public function messages()
     {
         return [
-            'mobile.required' => 'شماره همراه الزامی است',
-            'mobile.regex' => 'فرمت شماره همراه اشتباه است',
-            'mobile.exists' => 'شماره همراه وجود ندارد',
-            'code.required' => 'کد الزامی است',
-            'code.max' => 'طول کد تایید باید '.AUTH_CODE_LENGTH.' کاراکتر باشد',
-            'device_info.string' => 'اطلاعات دیوایس باید استرینگ باشد'
+            'mobile.required' => Lang::get('msg.auth.rule.mobile.required'),
+            'mobile.regex' => Lang::get('msg.auth.rule.mobile.regex'),
+            'mobile.exists' => Lang::get('msg.auth.rule.mobile.exists'),
+            'code.required' => Lang::get('msg.auth.rule.code.required'),
+            'code.max' => Lang::get('msg.auth.rule.code.max'),
+            'device_info.string' => Lang::get('msg.auth.rule.device_info.string'),
         ];
     }
 
