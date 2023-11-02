@@ -1,8 +1,7 @@
-locations
+ locations [OK]
     id
-    latitude
-    longitude
     id_user
+    location
     created_at
     updated_at
     deleted_at

@@ -13,20 +13,62 @@ class Location extends Model
 
     protected $fillable = [
         'user_id',
-        'location', // Assuming 'location' is the polygon field
+        'location',
     ];
 
-    // Accessor for latitude
-//    public function getLatAttribute()
-//    {
-//        return $this->location ? $this->location->get() : null;
-//    }
-//
-//    // Accessor for longitude
-//    public function getLongAttribute()
-//    {
-//        return $this->location ? $this->location->getY() : null;
-//    }
+    protected $appends = [
+        'lat',
+        'long'
+    ];
+
+    protected $geometry = ['location'];
+
+    /**
+     * Select geometrical attributes as text from database.
+     * @var bool
+     */
+    protected $geometryAsText = true;
+
+    /**
+     * Get a new query builder for the model's table.
+     * Manipulate in case we need to convert geometrical fields to text.
+     *
+     * @param bool $excludeDeleted
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function newQuery(bool $excludeDeleted = true): \Illuminate\Database\Eloquent\Builder
+    {
+        if (!empty($this->geometry) && $this->geometryAsText === true)
+        {
+            $raw = '';
+            foreach ($this->geometry as $column)
+            {
+                $raw .= 'AsText(`' . $this->table . '`.`' . $column . '`) as `' . $column . '`, ';
+
+            }
+            $raw = substr($raw, 0, -2);
+
+            return parent::newQuery($excludeDeleted)->addSelect('*', DB::raw($raw));
+        }
+        return parent::newQuery($excludeDeleted);
+    }
+
+
+    public function getLatAttribute(): string | null
+    {
+        $getLat = getLatLongFromPoint($this->location);
+        if(!empty($getLat))
+            return $getLat[1];
+        return null;
+    }
+
+    public function getLongAttribute(): string | null
+    {
+        $getLat = getLatLongFromPoint($this->location);
+        if(!empty($getLat))
+            return $getLat[2];
+        return null;
+    }
 
 
     public function User(): HasOne
