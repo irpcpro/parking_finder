@@ -27,6 +27,6 @@ function getUserIP() {
 }
 
 function getLatLongFromPoint(string $value): array {
-    preg_match("/Point\('([\d.]+)', '([\d.]+)'\)/", $value, $matches);
+    preg_match("/POINT\(([\d.]+), ([\d.]+)\)/", $value, $matches);
     return $matches;
 }

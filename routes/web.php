@@ -17,13 +17,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $location = Location::create([
-        'location' => DB::raw("Point('35.00074', '51.00035')"),
-        'user_id' => 1,
-    ]);
-    dd($location->lat);
-    dd(getLatLongFromPoint($location->location));
-
 
 
     dd(

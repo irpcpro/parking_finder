@@ -23,27 +23,14 @@ class Location extends Model
 
     protected $geometry = ['location'];
 
-    /**
-     * Select geometrical attributes as text from database.
-     * @var bool
-     */
     protected $geometryAsText = true;
 
-    /**
-     * Get a new query builder for the model's table.
-     * Manipulate in case we need to convert geometrical fields to text.
-     *
-     * @param bool $excludeDeleted
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function newQuery(bool $excludeDeleted = true): \Illuminate\Database\Eloquent\Builder
     {
-        if (!empty($this->geometry) && $this->geometryAsText === true)
-        {
+        if (!empty($this->geometry) && $this->geometryAsText === true) {
             $raw = '';
-            foreach ($this->geometry as $column)
-            {
-                $raw .= 'AsText(`' . $this->table . '`.`' . $column . '`) as `' . $column . '`, ';
+            foreach ($this->geometry as $column) {
+                $raw .= "CONCAT('POINT(', ST_X(`" . $this->table . "`.`" . $column . "`), ', ', ST_Y(`" . $this->table . "`.`" . $column . "`), ')') as `" . $column . "`, ";
             }
             $raw = substr($raw, 0, -2);
 
@@ -55,7 +42,7 @@ class Location extends Model
 
     public function getLatAttribute(): string | null
     {
-        $location = $this->location->getValue(DB::getQueryGrammar());
+        $location = (gettype($this->location) != "string")? $this->location->getValue(DB::getQueryGrammar()) : $this->location;
         $getLat = getLatLongFromPoint($location);
         if(!empty($getLat))
             return $getLat[1];
@@ -64,7 +51,7 @@ class Location extends Model
 
     public function getLongAttribute(): string | null
     {
-        $location = $this->location->getValue(DB::getQueryGrammar());
+        $location = (gettype($this->location) != "string")? $this->location->getValue(DB::getQueryGrammar()) : $this->location;
         $getLat = getLatLongFromPoint($location);
         if(!empty($getLat))
             return $getLat[2];

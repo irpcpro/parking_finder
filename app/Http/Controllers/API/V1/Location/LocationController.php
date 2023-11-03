@@ -20,7 +20,7 @@ class LocationController extends Controller
 
         // insert data
         $location = Location::create([
-            'location' => DB::raw("Point('$request->lat', '$request->long')"),
+            'location' => DB::raw("POINT($request->lat, $request->long)"),
             'user_id' => $current_user->id,
         ]);
 
