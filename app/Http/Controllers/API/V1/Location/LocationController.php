@@ -36,7 +36,7 @@ class LocationController extends Controller
             $data = new LocationStoreResource($location);
             $data = $data->toArray($request);
 
-//            DB::commit();
+            DB::commit();
 
             // send response
             $response = APIResponse(Lang::get('msg.location.store.success'), 200, true);
