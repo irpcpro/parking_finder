@@ -18,7 +18,7 @@ class ConfirmationCodeRequest extends AppRequest
     {
         return [
             'mobile' => ['required', 'bail', 'exists:users,mobile', 'regex:' . REGEX_MOBILE],
-            'code' => ['required', 'string', 'max:' . AUTH_CODE_LENGTH],
+            'code' => ['required', 'string', 'max:' . LENGTH_AUTH_CODE],
             "device_info" => ['nullable', 'string']
         ];
     }

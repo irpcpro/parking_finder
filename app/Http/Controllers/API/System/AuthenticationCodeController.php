@@ -18,7 +18,7 @@ class AuthenticationCodeController extends Controller
     private function generateCode(): string
     {
         $code = '';
-        for($i = 0; $i < AUTH_CODE_LENGTH; $i++)
+        for($i = 0; $i < LENGTH_AUTH_CODE; $i++)
             $code .= AUTH_CODE_FAKE ? "1" : rand(0, 9);
         return $code;
     }

@@ -8,6 +8,7 @@ use App\Http\Resources\V1\Location\LocationStoreResource;
 use App\Models\Location;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
 
 class LocationController extends Controller
 {
@@ -25,23 +26,29 @@ class LocationController extends Controller
             $location = Location::create([
                 'location' => DB::raw("POINT($request->lat, $request->long)"),
                 'user_id' => $current_user->id,
-            ])->locationinfo()->create([
+            ]);
+
+            $location->locationinfo()->create([
                 'title' => $request->title,
                 'description' => $request->description,
             ]);
 
-
             $data = new LocationStoreResource($location);
             $data = $data->toArray($request);
 
-            DB::commit();
+//            DB::commit();
 
             // send response
             $response = APIResponse(Lang::get('msg.location.store.success'), 200, true);
             $response = $response->setData($data);
             $response->send();
         } catch (\Exception $exception){
+            // rollback db
             DB::rollBack();
+
+            // save log
+            Log::error('error in saving location ('.__METHOD__.')', [$exception]);
+
             // send response
             $response = APIResponse(Lang::get('msg.request.error_crash'), 500, false);
             $response->send();

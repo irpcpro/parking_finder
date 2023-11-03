@@ -16,7 +16,9 @@ class LocationStoreRequest extends FormRequest
     {
         return [
             'lat' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
-            'long' => ['required','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
+            'long' => ['required','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'],
+            'title' => ['string', 'required', 'max:' . LENGTH_LOCATION_INFO_TITLE],
+            'description' => ['string', 'nullable', 'max:' . LENGTH_LOCATION_INFO_DESCRIPTION]
         ];
     }
 
@@ -27,6 +29,11 @@ class LocationStoreRequest extends FormRequest
             'lat.regex' => Lang::get('msg.location.rule.lat.regex'),
             'long.required' => Lang::get('msg.location.rule.long.required'),
             'long.regex' => Lang::get('msg.location.rule.long.regex'),
+            'title.required' => Lang::get('msg.location.rule.title.required'),
+            'title.string' => Lang::get('msg.location.rule.title.string'),
+            'title.max' => Lang::get('msg.location.rule.title.max'),
+            'description.string' => Lang::get('msg.location.rule.description.string'),
+            'description.max' => Lang::get('msg.location.rule.description.max'),
         ];
     }
 

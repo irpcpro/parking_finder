@@ -3,6 +3,7 @@
 namespace App\Http\Resources\V1\Location;
 
 use App\Models\Location;
+use App\Models\LocationInfo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +18,9 @@ class LocationStoreResource extends JsonResource
     {
         return [
             'lat' => $this->lat,
-            'long' => $this->long
+            'long' => $this->long,
+            'title' => $this->locationinfo->title ?? null,
+            'description' => $this->locationinfo->description ?? null
         ];
     }
 }
