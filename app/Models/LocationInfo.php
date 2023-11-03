@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class UserLoginLogs extends Model
+class LocationInfo extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_ip',
-        'login_timestamp',
+        'location_id',
+        'title',
+        'description',
     ];
 
-    public function user(): HasOne
+    public function location(): HasOne
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(Location::class);
     }
 
 }

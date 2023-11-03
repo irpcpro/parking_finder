@@ -82,7 +82,7 @@ class AuthenticationController
             ];
 
             // insert log
-            $user->LoginLogs()->create([
+            $user->loginLogs()->create([
                 'user_ip' => getUserIP(),
                 'login_timestamp' => time(),
             ]);

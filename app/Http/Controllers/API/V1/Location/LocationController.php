@@ -18,20 +18,34 @@ class LocationController extends Controller
         // get the current user
         $current_user = auth()->user();
 
-        // insert data
-        $location = Location::create([
-            'location' => DB::raw("POINT($request->lat, $request->long)"),
-            'user_id' => $current_user->id,
-        ]);
+        DB::beginTransaction();
+        try {
+
+            // insert data
+            $location = Location::create([
+                'location' => DB::raw("POINT($request->lat, $request->long)"),
+                'user_id' => $current_user->id,
+            ])->locationinfo()->create([
+                'title' => $request->title,
+                'description' => $request->description,
+            ]);
 
 
-        $data = new LocationStoreResource($location);
-        $data = $data->toArray($request);
+            $data = new LocationStoreResource($location);
+            $data = $data->toArray($request);
 
-        // send response
-        $response = APIResponse(Lang::get('msg.location.store.success'), 200, true);
-        $response = $response->setData($data);
-        $response->send();
+            DB::commit();
+
+            // send response
+            $response = APIResponse(Lang::get('msg.location.store.success'), 200, true);
+            $response = $response->setData($data);
+            $response->send();
+        } catch (\Exception $exception){
+            DB::rollBack();
+            // send response
+            $response = APIResponse(Lang::get('msg.request.error_crash'), 500, false);
+            $response->send();
+        }
     }
 
 }

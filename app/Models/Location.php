@@ -59,9 +59,14 @@ class Location extends Model
     }
 
 
-    public function User(): HasOne
+    public function user(): HasOne
     {
         return $this->hasOne(User::class);
+    }
+
+    public function locationInfo(): HasOne
+    {
+        return $this->hasOne(LocationInfo::class);
     }
 
 }

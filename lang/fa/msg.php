@@ -4,7 +4,9 @@ return [
 
     // app requests error
     'request' => [
-        'error_message' => 'خطا در مقادیر ورودی'
+        'error_input' => 'خطا در مقادیر ورودی',
+        'error_crash' => 'مشکلی پیش آمده.مجددا تلاش کنید',
+        'error_unauthorized' => 'دسترسی محدود میباشد',
     ],
 
     // authentication

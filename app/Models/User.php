@@ -60,7 +60,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(AuthenticationCode::class);
     }
 
-    public function LoginLogs(): HasMany
+    public function loginLogs(): HasMany
     {
         return $this->hasMany(UserLoginLogs::class);
     }

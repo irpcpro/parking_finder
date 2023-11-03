@@ -18,7 +18,7 @@ class AppRequest extends FormRequest
 
     public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null)
     {
-        $this->error_message = Lang::get('msg.request.error_message');
+        $this->error_message = Lang::get('msg.request.error_input');
         parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
     }
 
